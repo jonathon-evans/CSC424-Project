@@ -1,0 +1,408 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Baloo Tamma 2', cursive;
+    color: #EDE3E4;
+}
+
+.App-Div{
+    text-align: center;
+     width: 100%;
+ }
+
+.App-Logo{
+    max-width: 100%;
+    height: auto;
+}
+
+.App-Overlay{
+    background-color:#000000bd;
+    z-index: 3;
+    border-bottom-left-radius: 75px;
+    border-bottom-right-radius: 75px;
+
+}
+
+.App-Overlay-Content{
+    padding-top: 15%;
+}
+
+
+.App-Div-Buttons{
+    display: flex;
+    padding-bottom: 15%;
+    height: 100px;
+    justify-content: space-evenly;
+}
+
+.App-Div-Buttons:focus {outline:0;}
+
+.App-Div-ChoiceButton{
+    background-size: 100% 200%;
+    background-image: linear-gradient(to bottom, #6153CC 50%, rgb(143, 131, 240) 50%);
+    transition: background-position 0.5s;
+    /* background-color: #6153CC; */
+    border: 2px solid #6153CC;
+}
+
+.App-Div-ChoiceButton:focus{outline: 0;}
+.App-SelectedButton:focus{outline: 0;}
+
+.App-Div-ChoiceButton:hover{
+    background-position: 0 -100%;
+}
+
+.App-Legend{
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #1b283c96;
+    border: 1px solid #1b283c96;
+    position: fixed;
+    border-radius: 45px;
+}
+
+.App-Legend:focus{outline: 0;}
+
+
+.App-SelectedButton{
+    background-color: rgb(143, 131, 240);
+    border: 2px solid rgb(143, 131, 240);
+}
+
+.App-Legend-Content-Status span{
+    float: right;
+    font-weight: 600;
+    margin-right: 5%;
+}
+
+#App-Legend-Content-Status-NotBusy{
+    color: #3fd34e;
+}
+#App-Legend-Content-Status-SlightlyBusy{
+    color: #FFD275;
+}
+#App-Legend-Content-Status-FairlyBusy{
+    color: #d34e3f;
+}
+#App-Legend-Content-Status-VeryBusy{
+    color: #D33F49;
+}
+
+.App-Legend-Displayed{
+    animation: disappear .5s 1;
+    background-color:rgba(20, 18, 37, 0.897);
+    border: 3px solid #1b283c96;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.App-Legend-Div{
+    padding-bottom: 5%;
+    background-color:rgb(20, 18, 37);
+    border: 3px solid rgb(184, 178, 240);
+    z-index: 5;
+    border-radius: 10%;
+    position: absolute;
+    animation: grow .5s 1;
+}
+    
+.App-Legend-Content-Based{
+    line-height: 80%;
+    padding-bottom: 10%;
+    
+}
+
+.App-Legend-Content-Status{
+    list-style-type: none;
+    margin: auto;
+    text-align: justify;
+    margin-left: 5%;
+}
+
+.App-Legend-Icon{
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+    .App-Div-ChoiceButton{
+        width: 30%;
+        height: 100%;
+        font-size: 100%;
+        border-radius: 10px;
+        margin-top: 0%;
+    }
+
+    .App-SelectedButton{
+        width: 30%;
+        height: 100%;
+        font-size: 100%;
+        border-radius: 10px;
+        margin-top: 0%;
+    }
+
+    .App-Legend{
+        height: 2.65em;
+        width: 2.65em;
+        bottom:1px;
+        right: 1px;
+    
+    }
+    
+    .App-Legend-Div{
+        width: 75%;
+        margin: 5% 25% 0 12%;
+    }
+    
+    .App-Legend-Content-Status{
+        font-size: 1.50em;
+    }
+
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .center{
+        margin: auto;
+        width: 80%;
+    }
+    .App-Div-ChoiceButton{
+        width: 30%;
+        height: 3em;
+        font-size: 1.25em;
+        border-radius: 10px;
+        margin-top: 0%;
+    }
+
+    .App-SelectedButton{
+        width: 30%;
+        height: 3em;
+        font-size: 1.25em;
+        border-radius: 10px;
+        margin-top: 0%;
+    }
+
+    .App-Legend-Content h1{
+        font-size: 3em;
+    }
+
+    .App-Legend-Content h4{
+        font-size: 1.50em;
+    }
+
+    
+    .App-Legend{
+        height: 4em;
+        width: 4em;
+        bottom: 1px;
+        right: 1px;
+    
+    }
+    
+    .App-Legend-Div{
+        width: 50%;
+        margin: 2% 50% 0 15%;
+    }
+    
+    .App-Legend-Content-Status{
+        font-size: 1.75em;
+    }
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .center{
+        margin: auto;
+        width: 80%;
+    }
+    .App-Div-ChoiceButton{
+        width: 30%;
+        height: 2.50em;
+        font-size: 1.5em;
+        border-radius: 10px;
+        margin-top: 0%;
+    }
+
+    .App-SelectedButton{
+        width: 30%;
+        height: 2.50em;
+        font-size: 1.5em;
+        border-radius: 10px;
+        margin-top: 0%;
+    }
+    
+    .App-Legend-Content h1{
+        font-size: 4em;
+    }
+
+    .App-Legend-Content h4{
+        font-size: 2.20em;
+    }
+
+    
+    .App-Legend{
+        height: 7em;
+        width: 7em;
+        border-radius: 45px;
+        bottom: 1px;
+        right: 1px;
+    }
+    
+    .App-Legend-Div{
+        width: 50%;
+        margin: 2% 50% 0 15%;
+    }
+    
+    .App-Legend-Content-Status{
+        font-size: em;
+    }
+
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .center{
+        margin: auto;
+        width: 70%;
+    }
+
+     .App-Overlay-Content{
+         padding-top: 10%;
+     }
+
+    .App-Div-ChoiceButton{
+        width: 25%;
+        height: 2.50em;
+        font-size: 1.5em;
+        border-radius: 10px;
+        margin-top: 0%;
+    }
+
+    .App-SelectedButton{
+        width: 25%;
+        height: 2.50em;
+        font-size: 1.5em;
+        border-radius: 10px;
+        margin-top: 0%;
+    }
+        
+    .App-Legend-Content h1{
+        font-size: 4em;
+    }
+
+    .App-Legend-Content h4{
+        font-size: 2.50em;
+    }
+
+    
+    .App-Legend{
+        height: 7em;
+        width: 7em;
+        bottom: 1px;
+        right: 1px;
+    }
+
+    .App-Legend-Div{
+        width: 50%;
+        margin: 2% 50% 0 10%;
+    }
+    
+    .App-Legend-Content-Status{
+        font-size: 2.5em;
+    }
+    
+
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .center{
+        margin: auto;
+        width: 50%;
+    }
+
+     .App-Overlay-Content{
+         padding-top: 10%;
+     }
+
+    .App-Div-ChoiceButton{
+        width: 25%;
+        height: 2.50em;
+        font-size: 1.5em;
+        border-radius: 10px;
+        margin-top: 0%;
+    }
+
+    .App-SelectedButton{
+        width: 25%;
+        height: 2.50em;
+        font-size: 1.5em;
+        border-radius: 10px;
+        margin-top: 0%;
+    }
+            
+    .App-Legend-Content h1{
+        font-size: 3.75em;
+    }
+
+    .App-Legend-Content h4{
+        font-size: 2.25em;
+    }
+
+    
+    .App-Legend{
+        height: 7em;
+        width: 7em;
+        bottom: 1px;
+        right: 1px;
+    }
+
+    .App-Legend-Div{
+        width: 30%;
+        margin: 2% 50% 0 10%;
+    }
+    
+    .App-Legend-Content-Status{
+        font-size: 2em;
+    }
+    
+
+
+
+}
+
+
+@keyframes pulse{
+    0% {border-color: #1b283c96;}
+    50% {border-color:#f0bb40;}
+    100% {border-color: #1b283c96;}
+}
+
+@keyframes grow{
+    0%{
+        transform: scale(0);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+@keyframes disappear{
+    0%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(0);
+    }
+}
+

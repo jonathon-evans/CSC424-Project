@@ -1,0 +1,215 @@
+.Div-Button{
+    background-color: #1b283c;
+    border: 1px solid #1b283c;
+    position: absolute;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius:15px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.Div-Button-Return{
+    max-width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Div-Button:focus {outline:0;}
+
+
+.RenderChart-Div{
+    width: 95%;
+    height: 95%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-bottom: 10%;
+}
+
+.MoreInfo-Parent-Div{
+    width: 100%;
+    margin: 0 auto;
+}
+
+.Div-Barchart{
+    width: 100%;
+    height: 100%;
+}
+
+.Div-Button{
+    height: 4.50em;
+    width: 4.50em;
+}
+
+
+.MoreInfo-Div{
+    padding-bottom: 45%;
+    background-color:rgba(53, 46, 112, 0.61);
+    z-index: 3;
+    width: 95%;
+    border-radius: 10%;
+    position: relative;
+    animation: slideRight 0.5s ease-in-out -.25s;
+}
+
+
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  
+
+    .MoreInfo-Div{
+        height: 20em;
+        margin: 6% auto 0 auto;
+        position: relative;
+    }
+
+    #Div-Button-Location{
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        font-weight: 500;
+        font-size: 1.5em;
+        width: 100%;
+        pointer-events: none;
+     }
+
+
+    .Div-Image-Line{
+        position: absolute;
+        width: 100%;
+        height: 3.75em;
+        left: 0;
+        bottom: 0;
+        z-index: -4;
+        border-bottom-right-radius: 30px;
+        border-bottom-left-radius: 30px;
+        border-top-left-radius: 30px;
+        opacity: 0.7;
+    }
+
+
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+    
+    .MoreInfo-Div{
+        height: 30em;
+        margin: 8% auto 0 auto;
+    }
+
+    #Div-Button-Location{
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        font-weight: 500;
+        font-size: 2.5em;
+        width: 100%;
+        pointer-events: none;
+     }
+
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+    .MoreInfo-Div{
+        height: 30em;
+        margin: 8% auto 0 auto;
+    }
+    
+.Div-Button{
+    height: 5.50em;
+    width: 5.50em;
+}
+
+#Div-Button-Location{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    font-weight: 500;
+    font-size: 2.5em;
+    width: 100%;
+    pointer-events: none;
+}
+    
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    
+    .MoreInfo-Div{
+        height: 40em;
+        margin: 10% auto 0 auto;
+    }
+
+    .Div-Button{
+        height: 7em;
+        width: 7em;
+    }
+
+    #Div-Button-Location{
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        font-weight: 500;
+        font-size: 3em;
+        width: 100%;
+        pointer-events: none;
+     }
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+   
+    .MoreInfo-Div{
+        height: 40em;
+        margin: 6% auto 0 auto;
+    }
+
+    .Div-Button{
+        height: 6em;
+        width: 6em;
+    }
+
+    #Div-Button-Location{
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        font-weight: 500;
+        font-size: 3em;
+        width: 100%;
+        pointer-events: none;
+     }
+    
+}
+
+
+@keyframes slideRight{
+    0%{
+        right: -900px;
+    }
+    100%{
+        right: 0px;
+    }
+}

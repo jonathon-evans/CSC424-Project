@@ -1,0 +1,14 @@
+body {
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #6699d0;
+    background-image: linear-gradient(0deg, #9890ec 0%, #5d9fe6 100%);
+    
+}
+
+html, body{
+    max-width: 100%;
+    overflow-x: hidden;
+}

@@ -1,0 +1,600 @@
+.Choice-Div{
+    background-color:rgba(53, 46, 112, 0.61);
+    z-index: 3;
+    border-radius: 10%;
+    position: relative;
+    animation: slideLeft 0.5s ease-in-out -.25s;
+}
+
+.Choice-Div-Button-moreInfo{
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Choice-Div-Status-Very{
+    color: #D33F49;
+}
+
+.Choice-Div-Status-Fairly{
+    color: #d34e3f;
+}
+
+.Choice-Div-Status-Slightly{
+    color: #FFD275;
+}
+
+.Choice-Div-Status-Not{
+    color: #3fd34e;
+}
+
+.Choice-Div-Button{
+    background-color: #1b283c;
+    border: 1px solid #1b283c;
+    position: absolute;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius:15px;
+    bottom: 0px;
+    right: 0px;
+}
+
+.Choice-Div-Button:focus {outline:0;}
+
+.Choice-Div-See-Button{
+    background-color: #1b283c;
+    border: 1px solid #1b283c;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+
+}
+
+
+.Choice-Div-See-Button{
+    text-align: center;
+    margin: auto;
+}
+
+.Choice-Div-See-Button:focus {outline:0;}
+
+.Choice-Div-See-Button-Enabled{
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.RenderLineImage-Div-Img{
+    animation: grow .5s 1;
+}
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .Choice-Div{
+        padding-bottom: 10%;
+        width: 95%;
+        margin: 6% auto 0 auto;
+    }
+
+    #Choice-Div-Location{
+        font-size: 4em;
+        margin-bottom: 0;
+        font-weight: 600;
+    }
+
+    #Choice-Div-Middle{
+      line-height: 5%;
+      font-size: 2em;
+    }
+
+    #Choice-Div-Busy{
+        line-height: 5%;
+        font-size: 2em;
+        padding-bottom: 10%;
+    }
+
+    .Choice-Div-LocationMiddle{
+        padding-bottom: 5%;
+    }
+
+    .Choice-Div-Status{
+        font-size: 3.75em;
+        font-weight: 700;
+    }
+
+
+    .Choice-Div-Button{
+        height: 4.50em;
+        width: 4.50em;
+    }
+
+    .Choice-Div-See-Button{
+        font-size: 15px;
+        font-weight: 400;
+        width: 10em;
+        text-align: center;
+        margin: auto;
+    }
+
+    .Choice-Div-See-Button-Enabled{
+        border: 3px solid #1b283c;
+        font-size: 15px;
+        font-weight: 400;
+        width: 10em;
+        text-align: center;
+        margin: auto;
+    }
+    
+    .Choice-Div-See-Button span{
+        font-size: 1.15em;
+    }
+    
+    .Choice-Div-See{
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        margin-left: -50%;
+    }
+
+    .RenderLineImage{
+        width: 100%;
+        height: auto;
+        display: table;
+    }
+
+
+    .RenderLineImage-Div{
+        z-index: 10;
+        position: absolute;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;  
+        left: 0;
+        right: 0;
+        top: 25%
+    }
+    
+    .RenderLineImage-Div-Img{
+        border: 10px solid rgb(184, 178, 240);
+        background-color:rgb(20, 18, 37);
+
+        width: 19em;
+        height: 11em;
+        border-radius: 25%;
+    }
+
+
+
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .Choice-Div{
+        padding-bottom: 5%;
+        width: 80%;
+        margin: 8% auto 0 auto;
+    }
+
+    #Choice-Div-Location{
+        font-size: 5em;
+        margin-bottom: 0;
+        font-weight: 600;
+    }
+
+    #Choice-Div-Middle{
+      font-size: 2em;
+      line-height: 0.5;
+      margin-bottom: 1.5em;
+    }
+
+    #Choice-Div-Busy{
+        font-size: 3em;
+        padding-bottom: 8%;
+        line-height: 1.75;
+    }
+
+
+    .Choice-Div-Status{
+        font-size: 4.5em;
+        font-weight: 700;
+        line-height: 0.5;
+    }
+
+
+
+    .Choice-Div-Button{
+        height: 4.5em;
+        width: 4.5em;
+    }
+
+
+
+    .RenderLineImage{
+        width: 100%;
+        height: auto;
+        display: table;
+    }
+
+
+    .RenderLineImage-Div{
+        z-index: 10;
+        border-radius: 30%;
+        position: absolute;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;  
+        left: 0;
+        right: 0;
+        top: 25%
+    }
+    
+    .RenderLineImage-Div-Img{
+        border: 10px solid rgb(184, 178, 240);
+        width: 25em;
+        height: 16em;
+        border-radius: 25%;
+
+    }
+
+
+    .Choice-Div-See{
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        margin-left: -50%;
+    }
+
+
+    .Choice-Div-See-Button{
+        font-weight: 400;
+        width: 12em;
+        text-align: center;
+        margin: auto;
+    }
+
+    .Choice-Div-See-Button-Enabled{
+        border: 3px solid #1b283c;
+        font-weight: 400;
+        width: 12em;
+        text-align: center;
+        margin: auto;
+    }
+    
+    
+    .Choice-Div-See-Button span{
+        font-size: 1.35em;
+    }
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .Choice-Div{
+        padding-bottom: 5%;
+        width: 80%;
+        margin: 8% auto 0 auto;
+    }
+
+    #Choice-Div-Location{
+        font-size: 5em;
+        margin-bottom: 0;
+        font-weight: 600;
+    }
+
+    #Choice-Div-Middle{
+      font-size: 3em;
+      line-height: 0.5;
+      margin-bottom: 1.5em;
+    }
+
+    #Choice-Div-Busy{
+        font-size: 4em;
+        padding-bottom: 8%;
+        line-height: 1.75;
+    }
+
+
+    .Choice-Div-Status{
+        font-size: 5.5em;
+        font-weight: 700;
+        line-height: 0.5;
+    }
+
+    .Choice-Div-Button{
+        height: 5.5em;
+        width: 5.5em;
+    }
+
+    .Choice-Div-See{
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        margin-left: -50%;
+    }
+
+    .Choice-Div-See-Button{
+        font-weight: 400;
+        width: 14em;
+        text-align: center;
+        margin: auto;
+    }
+
+    
+    .Choice-Div-See-Button-Enabled{
+        border: 3px solid #1b283c;
+        font-weight: 400;
+        width: 14em;
+        text-align: center;
+        margin: auto;
+    }
+    
+    .Choice-Div-See-Button span{
+        font-size: 1.50em;
+    }
+
+    .RenderLineImage{
+        width: 100%;
+        height: auto;
+        display: table;
+    }
+
+    
+    .RenderLineImage-Div{
+        z-index: 10;
+        border-radius: 30%;
+        position: absolute;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;     
+        top: 25.25%   
+
+    }
+    
+    .RenderLineImage-Div-Img{
+        border: 10px solid rgb(184, 178, 240);
+        width: 27em;
+        height: 18em;
+        border-radius: 25%;
+    }
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .Choice-Div{
+        padding-bottom: 5%;
+        width: 90%;
+        margin: 10% auto 0 auto;
+    }
+
+    #Choice-Div-Location{
+        font-size: 7em;
+        margin-bottom: 0;
+        font-weight: 600;
+    }
+
+    #Choice-Div-Middle{
+      font-size: 4em;
+      line-height: 0.5;
+      margin-bottom: 1.5em;
+      
+    }
+
+    #Choice-Div-Busy{
+        font-size: 4.75em;
+        padding-bottom: 8%;
+        line-height: 1.75;
+    }
+
+    .Choice-Div-Status{
+        font-size: 6.5em;
+        font-weight: 700;
+        line-height: 0.5;
+    }
+
+    .Choice-Div-Button{
+        height: 7em;
+        width: 7em;
+    }
+
+
+    .RenderLineImage{
+        width: 100%;
+        height: auto;
+        display: table;
+    }
+
+
+    .RenderLineImage-Div{
+        z-index: 10;
+        border-radius: 30%;
+        position: absolute;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;  
+        left: 0;
+        right: 0;
+        top: 25%
+    }
+    
+    .RenderLineImage-Div-Img{
+        border: 10px solid rgb(184, 178, 240);
+        width: 33em;
+        height: 24em;
+        border-radius: 25%;
+
+    }
+
+
+    .Choice-Div-See{
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        margin-left: -50%;
+    }
+
+
+    .Choice-Div-See-Button{
+        font-weight: 400;
+        width: 16em;
+        text-align: center;
+        margin: auto;
+    }
+
+    .Choice-Div-See-Button-Enabled{
+        border: 3.5px solid #1b283c;
+        font-weight: 400;
+        width: 16em;
+        text-align: center;
+        margin: auto;
+    }
+    
+    
+    .Choice-Div-See-Button span{
+        font-size: 2em;
+    }
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .Choice-Div{
+        padding-bottom: 5%;
+        width: 90%;
+        margin: 6% auto 0 auto;
+    }
+
+    #Choice-Div-Location{
+        font-size: 7em;
+        margin-bottom: 0;
+       
+        font-weight: 600;
+    }
+
+    #Choice-Div-Middle{
+      font-size: 4em;
+      line-height: 0.5;
+      margin-bottom: 1.5em;
+      
+    }
+
+    #Choice-Div-Busy{
+        font-size: 5em;
+        padding-bottom: 10%;
+        line-height: 1.5;
+    }
+
+    .Choice-Div-Status{
+        font-size: 6.5em;
+        font-weight: 700;
+        line-height: 0.5;
+    }
+
+    .Choice-Div-Button{
+        height: 6em;
+        width: 6em;
+    }
+
+
+            
+    .RenderLineImage{
+        width: 100%;
+        height: auto;
+        display: table;
+    }
+
+
+    .RenderLineImage-Div{
+        z-index: 10;
+        border-radius: 30%;
+        position: absolute;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;  
+        left: 0;
+        right: 0;
+        top: 25.25%
+    }
+    
+    .RenderLineImage-Div-Img{
+        border: 10px solid rgb(184, 178, 240);
+        width: 32.5em;
+        height: 23.5em;
+        border-radius: 25%;
+
+    }
+
+
+    .Choice-Div-See{
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        margin-left: -50%;
+    }
+
+    .Choice-Div-See{
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        margin-left: -50%;
+    }
+
+
+    .Choice-Div-See-Button{
+        font-weight: 400;
+        width: 18em;
+        text-align: center;
+        margin: auto;
+    }
+
+    .Choice-Div-See-Button-Enabled{
+        border: 3.5px solid #1b283c;
+        font-weight: 400;
+        width: 18em;
+        text-align: center;
+        margin: auto;
+    }
+    
+    .Choice-Div-See-Button span{
+        font-size: 2.25em;
+    }
+
+
+
+}
+
+@keyframes slideLeft{
+    0%{
+        right: 900px;
+    }
+    100%{
+        right: 0px;
+    }
+}
+
+
+@keyframes pulse{
+    0% {border-color: #1b283c96;}
+    50% {border-color:#f0bb40;}
+    100% {border-color: #1b283c96;}
+}
+
+@keyframes grow{
+    0%{
+        transform: scale(0);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
