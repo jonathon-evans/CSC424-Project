@@ -4,6 +4,7 @@
     border-radius: 10%;
     position: relative;
     animation: slideLeft 0.5s ease-in-out -.25s;
+    margin-bottom: 10%;
 }
 
 .Choice-Div-Button-moreInfo{
@@ -40,6 +41,7 @@
     border-top-left-radius:15px;
     bottom: 0px;
     right: 0px;
+    cursor: pointer;
 }
 
 .Choice-Div-Button:focus {outline:0;}
@@ -51,7 +53,7 @@
     border-top-left-radius: 20px;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
-
+    cursor: pointer;
 }
 
 

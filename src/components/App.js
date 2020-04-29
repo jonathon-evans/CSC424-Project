@@ -16,7 +16,13 @@ class App extends React.Component{
         moreInfoEnabled: false,
         busyStatus: null,
         legendEnabled: false,
-        lineImageEnabled: false
+        lineImageEnabled: false,
+        starbucksImg: null
+    }
+
+    componentDidMount(){
+        //http://linetracker.live/api/fresh
+        //http://linetracker.live/api/starb
     }
 
     onButtonClick = (event) => {
