@@ -146,6 +146,7 @@
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
 
+
     .App-Overlay-Content{
         padding-top: 3vh;
     }
@@ -169,8 +170,9 @@
     .App-Legend{
         height: 2.65em;
         width: 2.65em;
-        bottom:1px;
-        right: 1px;
+        bottom:1%;
+        right: 1%;
+        margin-bottom: 0.5%;
     
     }
     
@@ -182,6 +184,49 @@
     .App-Legend-Content-Status{
         font-size: 1.50em;
     }
+
+}
+@media only screen and (max-width: 600px) and (max-height: 700px)  {
+
+
+    .App-Overlay-Content{
+        padding-top: 0;
+    }
+    
+    .App-Div-ChoiceButton{
+        width: 30%;
+        height: 100%;
+        font-size: 100%;
+        border-radius: 10px;
+        margin-top: 0%;
+    }
+
+    .App-SelectedButton{
+        width: 30%;
+        height: 100%;
+        font-size: 100%;
+        border-radius: 10px;
+        margin-top: 0%;
+    }
+
+    .App-Legend{
+        height: 2.65em;
+        width: 2.65em;
+        bottom:1%;
+        right: 1%;
+        margin-bottom: 0.5%;
+    
+    }
+    
+    .App-Legend-Div{
+        width: 75%;
+        margin: 5% 25% 0 12%;
+    }
+    
+    .App-Legend-Content-Status{
+        font-size: 1.50em;
+    }
+
 
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */

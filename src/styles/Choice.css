@@ -79,7 +79,7 @@
     .Choice-Div{
         padding-bottom: 10%;
         width: 95%;
-        margin: 5% auto 0 auto;
+        margin: 10% auto 0 auto;
     }
 
     #Choice-Div-Location{
@@ -172,6 +172,103 @@
 
 
 
+
+}
+
+@media only screen and (max-width: 600px) and (max-height: 700px)  {
+    .Choice-Div{
+        padding-bottom: 10%;
+        width: 95%;
+        margin: 2.5% auto 0 auto;
+    }
+
+    #Choice-Div-Location{
+        font-size: 3em;
+        margin-bottom: 0;
+        font-weight: 600;
+    }
+
+    #Choice-Div-Middle{
+      line-height: 5%;
+      font-size: 2em;
+    }
+
+    #Choice-Div-Busy{
+        line-height: 5%;
+        font-size: 2em;
+        padding-bottom: 10%;
+    }
+
+    .Choice-Div-LocationMiddle{
+        padding-bottom: 5%;
+    }
+
+    .Choice-Div-Status{
+        font-size: 3.75em;
+        font-weight: 700;
+    }
+
+
+    .Choice-Div-Button{
+        height: 4.50em;
+        width: 4.50em;
+    }
+
+    .Choice-Div-See-Button{
+        font-size: 15px;
+        font-weight: 400;
+        width: 10em;
+        text-align: center;
+        margin: auto;
+    }
+
+    .Choice-Div-See-Button-Enabled{
+        border: 3px solid #1b283c;
+        font-size: 15px;
+        font-weight: 400;
+        width: 10em;
+        text-align: center;
+        margin: auto;
+    }
+    
+    .Choice-Div-See-Button span{
+        font-size: 1.15em;
+    }
+    
+    .Choice-Div-See{
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        margin-left: -50%;
+    }
+
+    .RenderLineImage{
+        width: 100%;
+        height: auto;
+        display: table;
+    }
+
+
+    .RenderLineImage-Div{
+        z-index: 10;
+        position: absolute;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;  
+        left: 0;
+        right: 0;
+        top: 22%
+    }
+    
+    .RenderLineImage-Div-Img{
+        border: 10px solid rgb(184, 178, 240);
+        background-color:rgb(20, 18, 37);
+
+        width: 19em;
+        height: 11em;
+        border-radius: 25%;
+    }
 
 }
 

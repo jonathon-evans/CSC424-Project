@@ -57,16 +57,12 @@
 }
 
 
-
-
-
-/* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   
 
     .MoreInfo-Div{
         height: 20em;
-        margin: 5% auto 0 auto;
+        margin: 10% auto 0 auto;
         position: relative;
     }
 
@@ -99,6 +95,50 @@
 
 
 }
+
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) and (max-height: 700px)  {
+  
+
+    .MoreInfo-Div{
+        height: 17em;
+        margin: 2.5% auto 0 auto;
+        position: relative;
+    }
+
+    #Div-Button-Location{
+        position: absolute;
+        bottom: 0;
+        left: 55%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        font-weight: 500;
+        font-size: 1.50em;
+        width: 100%;
+        pointer-events: none;
+     }
+
+
+    .Div-Image-Line{
+        position: absolute;
+        width: 100%;
+        height: 3.75em;
+        left: 0;
+        bottom: 0;
+        z-index: -4;
+        border-bottom-right-radius: 30px;
+        border-bottom-left-radius: 30px;
+        border-top-left-radius: 30px;
+        opacity: 0.7;
+    }
+
+
+
+}
+
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {

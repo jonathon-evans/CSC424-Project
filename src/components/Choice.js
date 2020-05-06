@@ -49,7 +49,7 @@ class Choice extends React.Component{
                 <img 
                     className="RenderLineImage-Div-Img"
                     src={this.props.selectedLocation === 'Starbucks' ? lineImage2 : lineImage1}
-                    alt="Image of current line"
+                    alt={`${this.props.selectedLocation} current line`}
                 />
             </div>
             </div>
