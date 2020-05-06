@@ -110,6 +110,17 @@
     position: absolute;
     animation: grow .5s 1;
 }
+
+.App-Legend-Div-Exit{
+    padding-bottom: 5%;
+    background-color:rgb(20, 18, 37);
+    border: 3px solid rgb(184, 178, 240);
+    z-index: 5;
+    border-radius: 10%;
+    position: absolute;
+    animation: disappear .5s 1;
+    opacity: 0;
+}
     
 .App-Legend-Content-Based{
     line-height: 80%;
@@ -136,7 +147,7 @@
 @media only screen and (max-width: 600px) {
 
     .App-Overlay-Content{
-        padding-top: 4.5vh;
+        padding-top: 3vh;
     }
     
     .App-Div-ChoiceButton{
@@ -393,6 +404,7 @@
     50% {border-color:#f0bb40;}
     100% {border-color: #1b283c96;}
 }
+
 
 @keyframes grow{
     0%{

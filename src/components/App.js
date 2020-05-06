@@ -9,6 +9,10 @@ import logo from '../images/Linetracker Logo-03.png';
 import legend from '../images/Question Mark.png';
 
 
+const axios = require('axios');
+
+
+
 class App extends React.Component{
 
     state={
@@ -17,12 +21,29 @@ class App extends React.Component{
         busyStatus: null,
         legendEnabled: false,
         lineImageEnabled: false,
-        starbucksImg: null
+        starbucksImg: null,
+        freshImg: null
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         //http://linetracker.live/api/fresh
         //http://linetracker.live/api/starb
+
+        await axios.get('http://linetracker.live/api/fresh')
+        .then(response => {
+            // console.log(response)
+        //    return response.data.blob();
+
+        })
+        .then(blob => {
+            // let img = URL.createObjectURL(blob);
+            // console.log(img)
+        })
+        .catch(e => {
+            console.log(e)
+        })
+
+
     }
 
     onButtonClick = (event) => {
