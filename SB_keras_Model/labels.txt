@@ -1,0 +1,5 @@
+0 SBClosed
+1 SBNotBusy
+2 SBBusy
+3 SBSlightlyBusy
+4 SBVeryBusy

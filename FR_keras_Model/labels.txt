@@ -1,0 +1,5 @@
+0 FRClosed
+1 FRNotBusy
+2 FRSlightlyBusy
+3 FRBusy
+4 FRVeryBusy

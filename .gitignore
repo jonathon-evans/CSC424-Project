@@ -1,0 +1,13 @@
+NodeLog
+node_modules
+#*.jpg
+ImgDB*
+*.zip
+DataSet
+Set*
+test
+secret.py
+Fresh
+Starbucks
+__*
+database
