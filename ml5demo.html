@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+</head>
+
+<body>
+    <h1>ml5.js Demo Page</h1>
+    <h3>Note: Due to the very limited and unbalanced dataset, the accuracy of the model was adversely affected.</h3>
+    <img id="fresh" src="/api/fresh"
+        style="width: 320px; height: 180px;" />
+    <p>
+        Results: <div id="fRes"></div>
+    </p>
+    <br>
+    <img id="starb" src="/api/starb"
+        style="width: 320px; height: 180px;" />
+    <p>
+        Results: <div id="sRes"></div>
+    </p>
+    <script>
+        console.log('ml5 version:', ml5.version);
+        const frclassifier = ml5.imageClassifier('/frmodel/model.json', frmodelReady);
+        const sbclassifier = ml5.imageClassifier('/sbmodel/model.json', sbmodelReady);
+        function frmodelReady() {
+            console.log('FR Model Loaded!');
+        }
+        function sbmodelReady() {
+            console.log('SB Model Loaded!');
+        }
+
+        frclassifier.classify(document.getElementById('fresh'), (err, results) => {
+            console.log(results);
+            let topclass = { label: "", confidence: 0.0 };
+            for (x of results) {
+                console.log(x);
+                if (x.confidence > topclass.confidence)
+                    topclass = x;
+            }
+            document.getElementById('fRes').innerHTML = `${topclass.label}<br> Confidence: ${(topclass.confidence * 100).toFixed(2)}%`
+        });
+        sbclassifier.classify(document.getElementById('starb'), (err, results) => {
+            console.log(results);
+            let topclass = { label: "", confidence: 0.0 };
+            for (x of results) {
+                console.log(x);
+                if (x.confidence > topclass.confidence)
+                    topclass = x;
+            }
+            document.getElementById('sRes').innerHTML = `${topclass.label}<br> Confidence: ${(topclass.confidence * 100).toFixed(2)}%`
+        });
+
+    </script>
+</body>
+
+</html>
