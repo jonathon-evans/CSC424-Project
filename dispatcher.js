@@ -1,0 +1,305 @@
+const http = require('http');
+const url = require('url');
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+const qs = require('querystring');
+const mysql = require('mysql');
+const {username, passwd} = require('./secret');
+
+const port = process.argv[2] || 9000;
+
+const mimeType = {
+    '.ico': 'image/x-icon',
+    '.html': 'text/html',
+    '.js': 'text/javascript',
+    '.json': 'application/json',
+    '.css': 'text/css',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.wav': 'audio/wav',
+    '.mp3': 'audio/mpeg',
+    '.svg': 'image/svg+xml',
+    '.pdf': 'application/pdf',
+    '.zip': 'application/zip',
+    '.doc': 'application/msword',
+    '.eot': 'application/vnd.ms-fontobject',
+    '.ttf': 'application/x-font-ttf',
+};
+
+let pool = mysql.createPool({
+    connectionLimit: 100,
+    host: "127.0.0.1",
+    user: username,
+    password: passwd,
+    database: "linetracker"
+});
+
+function whitelist(dir, repstr, filelist) {
+    let files = fs.readdirSync(dir);
+    filelist = filelist || [];
+    files.forEach((file) => {
+        if (fs.statSync(path.join(dir, file)).isDirectory()) {
+            filelist = whitelist(path.join(dir, file), repstr, filelist);
+        }
+        else {
+            filelist.push(path.join(dir, file));
+        }
+    });
+    filelist.forEach((filepath, index) => {
+        filelist[index] = filepath.replace(repstr, '/');
+    })
+    return filelist;
+};
+
+const validPaths = whitelist('./build/', 'build/');
+const freshpath = whitelist('./ImgDB/FR', '/');
+const starbpath = whitelist('./ImgDB/SB', '/')
+
+console.log("Valid Paths:");
+console.log(validPaths);
+console.log(freshpath[0], starbpath[0]);
+
+http.createServer((req, res) => {
+
+    const parsedUrl = url.parse(req.url);
+    let query = qs.decode(parsedUrl.query);
+    //console.log(parsedUrl.query)
+
+    // Avoid https://en.wikipedia.org/wiki/Directory_traversal_attack
+    // e.g curl --path-as-is http://localhost:9000/../fileInDanger.txt
+
+    const sanitizePath = path.normalize(decodeURI(parsedUrl.pathname)).replace(/^(\.\.[\/\\])+/, '');
+    let pathname = path.join(__dirname, '/build/', sanitizePath);
+
+    if (sanitizePath === "/") {
+        fs.readFile(path.join(__dirname, "/build/index.html"), (err, data) => {
+            if (err) {
+                res.statusCode = 500;
+                res.end(`Error getting the file: ${err}.`);
+            } else {
+                res.setHeader('Content-type', 'text/html');
+                res.statusCode = 200;
+                res.end(data);
+            }
+        });
+    }
+    else if (sanitizePath === "/ml5demo") {
+        fs.readFile(path.join(__dirname, "/ml5demo.html"), (err, data) => {
+            if (err) {
+                res.statusCode = 500;
+                res.end(`Error getting the file: ${err}.`);
+            } else {
+                res.setHeader('Content-type', 'text/html');
+                res.statusCode = 200;
+                res.end(data);
+            }
+        });
+    }
+    else if (sanitizePath === "/api/fresh") {
+        let rand = parseInt(crypto.randomBytes(1).toString('hex'), 16) % freshpath.length;
+        let imagepath = path.join(__dirname, freshpath[rand]);
+        fs.readFile(imagepath, (err, data) => {
+            if (err) {
+                res.statusCode = 500;
+                res.end(`Error getting the file: ${err}.`);
+            } else {
+                res.setHeader('Content-type', mimeType['.jpg']);
+                res.setHeader('Img', freshpath[rand].replace('ImgDB\/FR\/', '').replace('.jpg', ''));
+                res.statusCode = 200;
+                res.end(data);
+            }
+        });
+    }
+    else if (sanitizePath === "/api/starb") {
+        let rand = parseInt(crypto.randomBytes(1).toString('hex'), 16) % starbpath.length;
+        let imagepath = path.join(__dirname, starbpath[rand]);
+        fs.readFile(imagepath, (err, data) => {
+            if (err) {
+                res.statusCode = 500;
+                res.end(`Error getting the file: ${err}.`);
+            } else {
+                res.setHeader('Content-type', mimeType['.jpg']);
+                res.setHeader('Img', starbpath[rand].replace('ImgDB\/SB\/', '').replace('.jpg', ''));
+                res.statusCode = 200;
+                res.end(data);
+            }
+        });
+    }
+    else if (sanitizePath === "/api/results") {
+        if (typeof query === 'undefined') {
+            console.log("Query Undef")
+            res.statusCode = 400;
+            res.end("Bad Query");
+        }
+        else if (typeof query.time === 'undefined') {
+            console.log("Query Time Undef")
+            res.statusCode = 400;
+            res.end("Bad Query");
+        }
+        else if (/[^0-9]/.test(query.time) || !(/^((FR)|(SB))$/.test(query.loc))) {
+            console.log("Bad Format or Location")
+            res.statusCode = 400;
+            res.end("Bad Query");
+        }
+        else if (query.time.length > 12 || parseInt(query.time) < 90000000 || parseInt(query.time) > 2147483647) {
+            console.log("Size Error")
+            res.statusCode(403)
+            res.end("Unauthorized Value");
+        }
+
+        else if (typeof query.span === 'undefined') {
+
+            console.log("Requesting Connection")
+            pool.getConnection((error, connection) => {
+                if (error) {
+                    console.log("Connection Failed")
+                    res.statusCode = 500;
+                    res.end("Server Error");
+                    return;
+                }
+                if (query.loc === "FR") {
+                    var location = "fresh"
+                }
+                else {
+                    var location = "starb"
+                }
+                connection.query(`SELECT * FROM ${location} WHERE time=${query.time}`, (error, results, fields) => {
+                    connection.release();
+                    if (error) {
+                        console.log(`Query: SELECT * FROM ${location} WHERE time=${query.time} Failed`)
+                        res.statusCode = 500;
+                        res.end("Server Error");
+                        return;
+                    }
+                    res.statusCode = 200;
+                    res.setHeader('Content-type', mimeType['.json'])
+                    res.end(JSON.stringify(results))
+                });
+            });
+        }
+
+        else if (query.span === "daily" || query.span === "weekly" || query.span === "monthly") {
+            res.statusCode = 501;
+            res.end()
+        }
+
+        else if (query.span === "hourly") {
+            //TODO: Finish implementing this function
+            let basetime = parseInt(query.time);
+            let basedate = new Date(basetime * 1000);
+            basedate.setMinutes(0, 0, 0);
+            let hours = {}
+            for (let i = 0; i < 24; i++) {
+
+            }
+            basedate.getUTCHours();
+
+            console.log("Requesting Connection");
+            pool.getConnection((error, connection) => {
+                if (error) {
+                    console.log("Connection Failed")
+                    res.statusCode = 500;
+                    res.end("Server Error");
+                    return;
+                }
+                if (query.loc === "FR") {
+                    var location = "fresh"
+                }
+                else {
+                    var location = "starb"
+                }
+                connection.query(`SELECT * FROM ${location} WHERE time=${query.time}`, (error, results, fields) => {
+                    connection.release();
+                    if (error) {
+                        console.log(`Query: SELECT * FROM ${location} WHERE time=${query.time} Failed`)
+                        res.statusCode = 500;
+                        res.end("Server Error");
+                        return;
+                    }
+                    res.statusCode = 200;
+                    res.setHeader('Content-type', mimeType['.json'])
+                    res.end(JSON.stringify(results))
+                });
+            });
+        }
+
+        else {
+            console.log("Uncaught Error")
+            res.statusCode = 600;
+            res.end("Unknown Error");
+        }
+    }
+    else if (validPaths.includes(sanitizePath)) {
+        fs.exists(pathname, (exist) => {
+            if (!exist) {
+                res.statusCode = 404;
+                res.end(`File ${sanitizePath} not found!`);
+                return;
+            }
+
+            if (fs.statSync(pathname).isDirectory()) {
+                pathname += '/index.html';
+            }
+
+            fs.readFile(pathname, (err, data) => {
+                if (err) {
+                    res.statusCode = 500;
+                    res.end(`Error getting the file: ${err}.`);
+                } else {
+                    let ext = path.parse(pathname).ext;
+                    res.setHeader('Content-type', mimeType[ext] || 'text/plain');
+                    res.end(data);
+                }
+            });
+        });
+    }
+    else if (/^\/api\/ImgDB\//.test(sanitizePath)) {
+        let imgpath = path.basename(sanitizePath)///\/((FR)|(SB))[0-9]{8,10}\.jpg/.exec(sanitizePath);
+        let loc = imgpath.slice(0, 2);
+        let temppath = path.join(`ImgDB/${loc}`, imgpath);
+
+        //console.log(temppath)
+        if(loc !== "FR" && loc !== "SB"){
+            console.log("Bad Location")
+            res.statusCode = 400;
+            res.end("Bad Query");
+            return;
+        }
+        else if (!(starbpath.includes(temppath) || freshpath.includes(temppath))) {
+            res.statusCode = 404;
+            res.end(`File ${imgpath} not found.`);
+            return;
+        }
+        else {
+            pathname = path.join(__dirname, `/ImgDB/${loc}`, imgpath);
+            fs.exists(pathname, (exist) => {
+                if (!exist) {
+                    res.statusCode = 404;
+                    res.end(`File ${imgpath} not found!`);
+                    return;
+                }
+
+                fs.readFile(pathname, (err, data) => {
+                    if (err) {
+                        res.statusCode = 500;
+                        res.end(`Error getting the file: ${err}.`);
+                    } else {
+                        res.setHeader('Content-type', 'image/jpeg');
+                        res.end(data);
+                    }
+                });
+            });
+        }
+    }
+    else {
+        res.statusCode = 308;
+        res.setHeader('Location', '/')
+        res.end();
+        //return;
+    }
+
+
+}).listen(parseInt(port));
+
+console.log(`Server listening on port ${port}`);

@@ -21,5 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/__pycache__
-/ImgDB
+__pycache__
+ImgDB
+secret.js

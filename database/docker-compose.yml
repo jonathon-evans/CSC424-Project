@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  mysqldb:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: test # Not the production password
+      MYSQL_DATABASE: linetracker
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./config/sqlserver.conf:/etc/mysql/conf.d/config-file.cnf"
+      - "./data:/var/lib/mysql:rw"
+
