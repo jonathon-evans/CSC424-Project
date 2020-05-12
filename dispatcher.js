@@ -58,7 +58,7 @@ const starbpath = whitelist('./ImgDB/SB', '/')
 
 console.log("Valid Paths:");
 console.log(validPaths);
-console.log(freshpath[0], starbpath[0]);
+//console.log(freshpath[0], starbpath[0]);
 
 http.createServer((req, res) => {
 
@@ -278,7 +278,6 @@ http.createServer((req, res) => {
                             break;
                         }
                         await timer(1000);
-                        console.log(resolved);
                     }
                 }
                 load();
