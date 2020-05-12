@@ -5,7 +5,7 @@ const path = require('path');
 const crypto = require('crypto');
 const qs = require('querystring');
 const mysql = require('mysql');
-const {username, passwd} = require('./secret');
+const { username, passwd } = require('./secret');
 
 const port = process.argv[2] || 9000;
 
@@ -66,6 +66,8 @@ http.createServer((req, res) => {
     let query = qs.decode(parsedUrl.query);
     //console.log(parsedUrl.query)
 
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
     // Avoid https://en.wikipedia.org/wiki/Directory_traversal_attack
     // e.g curl --path-as-is http://localhost:9000/../fileInDanger.txt
 
@@ -84,6 +86,26 @@ http.createServer((req, res) => {
             }
         });
     }
+    else if (sanitizePath === "/favicon.ico") {
+        fs.exists('./build/favicon.png', (exist) => {
+            if (!exist) {
+                res.statusCode = 404;
+                res.end(`Favicon not found!`);
+                return;
+            }
+
+            fs.readFile('./build/favicon.png', (err, data) => {
+                if (err) {
+                    res.statusCode = 500;
+                    res.end(`Error getting the favicon.`);
+                }
+                else {
+                    res.setHeader('Content-type', 'image/png');
+                    res.end(data);
+                }
+            });
+        });
+    }
     else if (sanitizePath === "/ml5demo") {
         fs.readFile(path.join(__dirname, "/ml5demo.html"), (err, data) => {
             if (err) {
@@ -95,6 +117,17 @@ http.createServer((req, res) => {
                 res.end(data);
             }
         });
+    }
+    else if (sanitizePath === "/api/timestamp") {
+        let ts = { fresh: 90000000, starb: 90000000 };
+        let rand = parseInt(crypto.randomBytes(1).toString('hex'), 16) % freshpath.length;
+        let rpath = freshpath[rand];
+        ts.fresh = (rpath.match(/[0-9]{8,10}/))[0];
+        rand = parseInt(crypto.randomBytes(1).toString('hex'), 16) % starbpath.length;
+        rpath = starbpath[rand];
+        ts.starb = (rpath.match(/[0-9]{8,10}/))[0];
+        res.setHeader('Content-type', mimeType['.json']);
+        res.end(JSON.stringify(ts));
     }
     else if (sanitizePath === "/api/fresh") {
         let rand = parseInt(crypto.randomBytes(1).toString('hex'), 16) % freshpath.length;
@@ -185,15 +218,11 @@ http.createServer((req, res) => {
         }
 
         else if (query.span === "hourly") {
-            //TODO: Finish implementing this function
             let basetime = parseInt(query.time);
             let basedate = new Date(basetime * 1000);
             basedate.setMinutes(0, 0, 0);
-            let hours = {}
-            for (let i = 0; i < 24; i++) {
-
-            }
-            basedate.getUTCHours();
+            let avgs = {};
+            let resolved = 0;
 
             console.log("Requesting Connection");
             pool.getConnection((error, connection) => {
@@ -203,24 +232,56 @@ http.createServer((req, res) => {
                     res.end("Server Error");
                     return;
                 }
+
                 if (query.loc === "FR") {
                     var location = "fresh"
                 }
                 else {
                     var location = "starb"
                 }
-                connection.query(`SELECT * FROM ${location} WHERE time=${query.time}`, (error, results, fields) => {
-                    connection.release();
-                    if (error) {
-                        console.log(`Query: SELECT * FROM ${location} WHERE time=${query.time} Failed`)
-                        res.statusCode = 500;
-                        res.end("Server Error");
-                        return;
+                for (let i = 0; i < 11; i++) {
+                    let cur = basedate.valueOf() - 3600000 * i;
+                    connection.query(`SELECT class FROM ${location} WHERE time > ${(cur - 3600000) / 1000} and time <= ${cur / 1000}`, (error, results, fields) => {
+                        //console.log("Cur", cur / 1000, results);
+                        if (error) {
+                            console.log(`Query: SELECT * FROM ${location} WHERE time=${cur} Failed`)
+                            res.statusCode = 500;
+                            res.end("Server Error");
+                            return;
+                        }
+                        let tempavg = 0;
+                        let nonzeros = 0;
+                        for (i of results) {
+                            tempavg += i.class;
+                            if (i.class != 0) {
+                                nonzeros++;
+                            }
+                        }
+                        tempavg /= (nonzeros != 0) ? nonzeros : 1;
+                        avgs[`${cur / 1000}`] = tempavg;
+                        resolved++;
+                    });
+                };
+
+                // HACK: This is bad but it works.
+                function timer(ms) {
+                    return new Promise(res => setTimeout(res, ms));
+                }
+                // Ditto.
+                async function load() {
+                    while (true) {
+                        if (resolved >= 11) {
+                            res.statusCode = 200;
+                            res.setHeader('Content-type', mimeType['.json'])
+                            res.end(JSON.stringify(avgs))
+                            connection.release();
+                            break;
+                        }
+                        await timer(1000);
+                        console.log(resolved);
                     }
-                    res.statusCode = 200;
-                    res.setHeader('Content-type', mimeType['.json'])
-                    res.end(JSON.stringify(results))
-                });
+                }
+                load();
             });
         }
 
@@ -260,7 +321,7 @@ http.createServer((req, res) => {
         let temppath = path.join(`ImgDB/${loc}`, imgpath);
 
         //console.log(temppath)
-        if(loc !== "FR" && loc !== "SB"){
+        if (loc !== "FR" && loc !== "SB") {
             console.log("Bad Location")
             res.statusCode = 400;
             res.end("Bad Query");
@@ -301,5 +362,20 @@ http.createServer((req, res) => {
 
 
 }).listen(parseInt(port));
+
+/*
+const opts = {
+        key: fs.readFileSync('/etc/letsencrypt/live/linetracker.live/privkey.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/linetracker.live/fullchain.pem')
+}
+
+http2.createServer((req,res)=>{
+        const parsedUrl = url.parse(req.url);
+        res.statusCode = 308;
+        res.setHeader('Location', path.join('https://www.linetracker.live', parsedUrl.pathname));
+        res.end();
+}).listen(80);
+
+*/
 
 console.log(`Server listening on port ${port}`);
