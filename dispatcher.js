@@ -87,14 +87,14 @@ http.createServer((req, res) => {
         });
     }
     else if (sanitizePath === "/favicon.ico") {
-        fs.exists('./build/favicon.png', (exist) => {
+        fs.exists('./build/favicon.ico', (exist) => {
             if (!exist) {
                 res.statusCode = 404;
                 res.end(`Favicon not found!`);
                 return;
             }
 
-            fs.readFile('./build/favicon.png', (err, data) => {
+            fs.readFile('./build/favicon.ico', (err, data) => {
                 if (err) {
                     res.statusCode = 500;
                     res.end(`Error getting the favicon.`);
