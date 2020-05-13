@@ -18,45 +18,136 @@ class App extends React.Component{
     state={
         selectedLocation: null,
         moreInfoEnabled: false,
-        busyStatus: null,
+        busyStatus: "Unavailable",
         legendEnabled: false,
         lineImageEnabled: false,
         starbucksImg: null,
-        freshImg: null
+        freshImg: null,
+        timeStampFresh: null,
+        timeStampStar: null,
+        busyStatusFresh: null,
+        busyStatusStar: null,
+        chartDataStar: null,
+        chartDataFresh: null,
+        chartReady: false
     }
 
     async componentDidMount(){
-        //http://linetracker.live/api/fresh
-        //http://linetracker.live/api/starb
-
-        await axios.get('http://linetracker.live/api/fresh')
+        await axios.get('https://linetracker.live/api/timestamp')
         .then(response => {
-            // console.log(response)
-        //    return response.data.blob();
-
-        })
-        .then(blob => {
-            // let img = URL.createObjectURL(blob);
-            // console.log(img)
-        })
+          this.setState({timeStampFresh: response.data.fresh, timeStampStar: response.data.starb})
+        })  
         .catch(e => {
             console.log(e)
         })
 
+        await axios.get(`https://linetracker.live/api/results?loc=SB&time=${this.state.timeStampFresh}`)
+        .then(response => {
 
+            let status = this.determineBusyStatus(response.data[0].class);
+
+            this.setState({busyStatusFresh: status})
+        })  
+        .catch(e => {
+            console.log(e)
+        })
+
+        await axios.get(`https://linetracker.live/api/results?loc=SB&time=${this.state.timeStampStar}`)
+        .then(response => {
+
+            let status = this.determineBusyStatus(response.data[0].class);
+            this.setState({busyStatusStar: status})
+        })  
+        .catch(e => {
+            console.log(e)
+        })
+
+        let dateStar = this.createDate(this.state.timeStampStar);
+        let dateFresh = this.createDate(this.state.timeStampFresh);
+
+        await axios.get(`https://linetracker.live/api/results?loc=SB&time=${dateFresh}&span=hourly`)
+        .then(response => {
+            let chartFresh = this.updateChartData(response.data)
+            this.setState({chartDataFresh: chartFresh})
+            // console.log(this.state.chartDataFresh)
+        })  
+        .catch(e => {
+            console.log(e)
+        })
+
+        await axios.get(`https://linetracker.live/api/results?loc=SB&time=${dateStar}&span=hourly`)
+        .then(response => {
+            let chartStar = this.updateChartData(response.data)
+            this.setState({chartDataStar: chartStar, chartReady: true})
+        })  
+        .catch(e => {
+            console.log(e)
+        })
     }
 
+    //converts timestamp into 8am - 6pm timestamp
+    createDate(timestamp){
+        return new Date(timestamp * 1000).setHours(18,0,0,0).valueOf() / 1000;
+    }
+
+    //convert num from server to status 
+    determineBusyStatus(status){
+        switch(status){
+            case 5: 
+                return "Very";
+            case 4:
+                return "Fairly";
+            case 1:
+                return 'Not';
+            case 0:
+                return 'Closed';
+            default:
+                return 'Slightly';
+            
+        }
+    }
+
+    //create correct output for moreinfo.js 
+    //convert from unix to js time
+    //add am/pm based on time
+    updateChartData(chartData){
+        let output = [];
+        for(const prop in chartData){
+            let hour = new Date(prop * 1000).getHours();
+            if(hour > 12){
+                hour -= 12;
+                hour = `${hour} PM`
+            }else{
+                hour = `${hour} AM`
+            }
+            output.push({name: hour, value: `${Math.round(chartData[prop])}`})
+        }
+
+        return output;
+    }
+
+ 
     onButtonClick = (event) => {
         this.setState({selectedLocation: event.target.name, moreInfoEnabled: false, legendEnabled: false, lineImageEnabled: false})
     }
 
     displayMoreInfo = () => {
-        if(this.state.moreInfoEnabled){
+        if(this.state.moreInfoEnabled && this.state.chartReady){
             return <MoreInfo  
                 selectedLocation={this.state.selectedLocation} 
-                busyStatus={this.state.busyStatus}
+                busyStatus={this.state.selectedLocation === 'Starbucks'? this.state.busyStatusStar : this.state.busyStatusFresh}
                 updateMoreInfo={this.updateMoreInfo}
+                chartDataStar={this.state.chartDataStar}
+                chartDataFresh={this.state.chartDataFresh}
                 />
+        }else if(this.state.moreInfoEnabled && !this.state.chartReady){
+            return(
+                <div className="Choice-Div">
+                    <div className="Choice-Div-LocationMiddle">
+                    <p id="Choice-Div-Location">Gathering Data</p>
+                    </div>
+                </div>
+            )
         }
         return null;
     }
@@ -121,6 +212,9 @@ class App extends React.Component{
                         updateMoreInfo={this.updateMoreInfo}
                         lineImageEnabled={this.state.lineImageEnabled}
                         updateLineImage={this.updateLineImage}
+                        timeStampStar={this.state.timeStampStar}
+                        timeStampFresh={this.state.timeStampStar}
+                        currentBusyStatus={this.state.selectedLocation === 'Starbucks'? this.state.busyStatusStar : this.state.busyStatusFresh}
                     />
                     {this.displayMoreInfo()}
                 </div>

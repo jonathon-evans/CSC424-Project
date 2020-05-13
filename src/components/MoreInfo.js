@@ -8,22 +8,12 @@ import backIcon from '../images/Arrow.png';
 
 class MoreInfo extends React.Component{
 
-    state={chartData: []}
+    state = {
+        chartData: []
+    }
 
     componentDidMount(){
-        this.setState({chartData: [
-            {name: '8 AM' ,value: '1'},
-            {name: '9 AM' ,value: '2'},
-            {name: '10 AM' ,value: '4'},
-            {name: '11 AM' ,value: '1'},
-            {name: '12 PM' ,value: '3'},
-            {name: '1 PM' ,value: '2'},
-            {name: '2 PM' ,value: '2'},
-            {name: '3 PM' ,value: '1'},
-            {name: '4 PM' ,value: '3'},
-            {name: '5 PM' ,value: '1'},
-            {name: '6 PM' ,value: '4'}
-        ]})
+       
     }
 
     getWeekDay = () => {
@@ -46,29 +36,33 @@ class MoreInfo extends React.Component{
         }
     }
 
+
+
     renderChart = () => {
+        let chart = this.props.selectedLocation === "Starbucks" ? this.props.chartDataStar : this.props.chartDataFresh;
         return (
         <div className="RenderChart-Div">
         <ResponsiveContainer>
-            <BarChart  data={this.state.chartData} margin={{top:25, right: 5, left: 0, bottom:0}}>
+            <BarChart  data={this.props.selectedLocation === "Starbucks" ? this.props.chartDataStar : this.props.chartDataFresh} margin={{top:25, right: 5, left: 0, bottom:0}}>
             <CartesianGrid strokeDasharray="2 2" />
             <XAxis dataKey="name"  tick={{fill: '#EDE3E4'}}/>
-            <YAxis label={{value: this.getWeekDay(), angle: -90, position: 'center', fill: '#EDE3E4', fontSize:'1.45em'}} tick={{fill: '#EDE3E4'}}/>
+            <YAxis label={{value: this.getWeekDay(), angle: -90, position: 'center', fill: '#EDE3E4', fontSize:'1.45em'}} tick={{fill: '#EDE3E4'}} domain={[0, 4]}/>
             <Bar dataKey="value" fill="#55d33f">
                 { 
-                    this.state.chartData.map((entry, index) => {
-                        const color = entry.value === '1' ? '#3fd34e':
-                                entry.value === '2' ? '#FFD275':
-                                entry.value === '3' ? '#d34e3f':
-                                entry.value === '4' ?  '#D33F49' : '#D33F49';
-                    return <Cell fill={color} key={index}/>;
-                })
+                    chart.map((entry, index) => {
+                    const color = entry.value === '1' ? '#3fd34e':
+                    entry.value === '2' ? '#FFD275':
+                    entry.value === '3' ? '#d34e3f':
+                    entry.value === '4' ?  '#D33F49' : 'rgba(211, 63, 73, 0)';
+                    return <Cell fill={color} key={index}/>;  
+                    })
                 }
             </Bar>
         </BarChart>
         </ResponsiveContainer>
         </div>
         )
+
     }
     
     render(){

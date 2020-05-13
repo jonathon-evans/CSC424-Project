@@ -3,38 +3,37 @@ import '../styles/Choice.css';
 
 
 import moreInfo from '../images/Linetracker Logo-04.png';
-import lineImage1 from '../images/Fresh_ex1.jpg'
-import lineImage2 from '../images/SB_ex1.jpg';
+
+
 
 class Choice extends React.Component{
 
 
     state = {
         busyStatus: null,
-        lineImageRendered: false
+        lineImageRendered: false,
+        freshImg: null
     }
 
-    componentDidMount(){
-        const arr = ['Very','Fairly', 'Slightly', 'Not'];
-        const choice = arr[Math.floor(Math.random() * 4)]
-        this.setState({busyStatus: choice});
-    }
+
 
     determineStatusColor(){
-        switch(this.state.busyStatus){
+        switch(this.props.currentBusyStatus){
             case("Very"):
                 return 'Choice-Div-Status-Very'
             case("Fairly"):
                 return 'Choice-Div-Status-Fairly'
             case("Slightly"):
                 return 'Choice-Div-Status-Slightly'
-            default:
+            case("Not"):
                 return 'Choice-Div-Status-Not'
+            default:
+                return 'Choice-Div-Status-Closed'
         }
     }
 
     renderMoreInfo = () =>{
-        this.props.updateMoreInfo(this.state.busyStatus);
+        this.props.updateMoreInfo(this.props.currentBusyStatus);
     }
 
     updateLineImage = () => {
@@ -43,12 +42,22 @@ class Choice extends React.Component{
 
     renderLineImage = () => {
         if(this.props.lineImageEnabled){
+            let image;
+            let location;
+            if(this.props.selectedLocation === 'Starbucks'){
+                location = 'SB';
+                image = this.props.timeStampStar;
+            }else{
+                location = 'FR';
+                image = this.props.timeStampFresh;
+            }
+
             return(
                 <div className="RenderLineImage">
                 <div className="RenderLineImage-Div">
                 <img 
                     className="RenderLineImage-Div-Img"
-                    src={this.props.selectedLocation === 'Starbucks' ? lineImage2 : lineImage1}
+                    src={`https://linetracker.live/api/ImgDB/${location}${image}.jpg`}
                     alt={`${this.props.selectedLocation} current line`}
                 />
             </div>
@@ -75,7 +84,7 @@ class Choice extends React.Component{
                     <p id="Choice-Div-Middle">is currently...</p>
                     {this.renderLineImage()}
                     </div>
-                    <p className={`Choice-Div-Status ${this.determineStatusColor()}`}>{this.state.busyStatus}</p>
+                    <p className={`Choice-Div-Status ${this.determineStatusColor()}`}>{this.props.currentBusyStatus}</p>
                     <p id="Choice-Div-Busy">Busy</p>
                     <div className="Choice-Div-See">
                         <button 

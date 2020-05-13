@@ -24,11 +24,16 @@
 }
 
 .Choice-Div-Status-Slightly{
+    
     color: #FFD275;
 }
 
 .Choice-Div-Status-Not{
     color: #3fd34e;
+}
+
+.Choice-Div-Status-Closed{
+    color: #ADA8BE;
 }
 
 .Choice-Div-Button{

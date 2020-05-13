@@ -178,7 +178,7 @@
     
     .App-Legend-Div{
         width: 75%;
-        margin: 5% 25% 0 12%;
+        margin:8% 25% 0 12%;
     }
     
     .App-Legend-Content-Status{
@@ -220,7 +220,7 @@
     
     .App-Legend-Div{
         width: 75%;
-        margin: 5% 25% 0 12%;
+        margin: 1% 25% 0 12%;
     }
     
     .App-Legend-Content-Status{
@@ -270,7 +270,7 @@
     
     .App-Legend-Div{
         width: 50%;
-        margin: 2% 50% 0 15%;
+        margin: 5% 50% 0 15%;
     }
     
     .App-Legend-Content-Status{
@@ -320,11 +320,11 @@
     
     .App-Legend-Div{
         width: 50%;
-        margin: 2% 50% 0 15%;
+        margin: 5% 50% 0 15%;
     }
     
     .App-Legend-Content-Status{
-        font-size: em;
+        font-size: 2em;
     }
 
 
@@ -375,7 +375,7 @@
 
     .App-Legend-Div{
         width: 50%;
-        margin: 2% 50% 0 10%;
+        margin: 5% 50% 0 10%;
     }
     
     .App-Legend-Content-Status{
@@ -431,11 +431,11 @@
 
     .App-Legend-Div{
         width: 30%;
-        margin: 2% 50% 0 10%;
+        margin: 5% 50% 0 10%;
     }
     
     .App-Legend-Content-Status{
-        font-size: 2em;
+        font-size: 2.5em;
     }
     
 
