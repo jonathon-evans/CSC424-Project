@@ -16,25 +16,25 @@ class MoreInfo extends React.Component{
        
     }
 
-    getWeekDay = () => {
-        const d = new Date();
-        switch(d.getDay()){
-            case 0: 
-                return 'Sunday'
-            case 1:
-                return 'Monday'
-            case 2:
-                return 'Tuesday'
-            case 3: 
-                return 'Wednesday'
-            case 4:
-                return 'Thursday'
-            case 5:
-                return 'Friday'
-            default:
-                return 'Saturday'
-        }
-    }
+    // getWeekDay = () => {
+    //     const d = new Date();
+    //     switch(d.getDay()){
+    //         case 0: 
+    //             return 'Sunday'
+    //         case 1:
+    //             return 'Monday'
+    //         case 2:
+    //             return 'Tuesday'
+    //         case 3: 
+    //             return 'Wednesday'
+    //         case 4:
+    //             return 'Thursday'
+    //         case 5:
+    //             return 'Friday'
+    //         default:
+    //             return 'Saturday'
+    //     }
+    // }
 
 
 
@@ -46,7 +46,7 @@ class MoreInfo extends React.Component{
             <BarChart  data={this.props.selectedLocation === "Starbucks" ? this.props.chartDataStar : this.props.chartDataFresh} margin={{top:25, right: 5, left: 0, bottom:0}}>
             <CartesianGrid strokeDasharray="2 2" />
             <XAxis dataKey="name"  tick={{fill: '#EDE3E4'}}/>
-            <YAxis label={{value: this.getWeekDay(), angle: -90, position: 'center', fill: '#EDE3E4', fontSize:'1.45em'}} tick={{fill: '#EDE3E4'}} domain={[0, 4]}/>
+            <YAxis label={{value: this.prop.currentDay, angle: -90, position: 'center', fill: '#EDE3E4', fontSize:'1.45em'}} tick={{fill: '#EDE3E4'}} domain={[0, 4]}/>
             <Bar dataKey="value" fill="#55d33f">
                 { 
                     chart.map((entry, index) => {

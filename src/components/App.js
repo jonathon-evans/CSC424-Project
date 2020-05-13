@@ -29,7 +29,8 @@ class App extends React.Component{
         busyStatusStar: null,
         chartDataStar: null,
         chartDataFresh: null,
-        chartReady: false
+        chartReady: false,
+        currentDay: null
     }
 
     async componentDidMount(){
@@ -51,6 +52,8 @@ class App extends React.Component{
         .catch(e => {
             console.log(e)
         })
+
+        this.getCurrentDay();
 
         await axios.get(`https://linetracker.live/api/results?loc=SB&time=${this.state.timeStampStar}`)
         .then(response => {
@@ -107,6 +110,38 @@ class App extends React.Component{
         }
     }
 
+    getCurrentDay(timestamp){
+
+        let date = new Date(timestamp);
+        let day;
+
+        switch(date.getDay()){
+            case 0: 
+                day = 'Sunday'
+                break;
+            case 1:
+                day = 'Monday'
+                break;
+            case 2:
+                day = 'Tuesday'
+                break;
+            case 3: 
+                day = 'Wednesday'
+                break;
+            case 4:
+                day = 'Thursday'
+                break;
+            case 5:
+                day = 'Friday'
+                break;
+            default:
+                day = 'Saturday'
+                break;
+        }
+
+        this.setState({currentDay: day})
+    }
+
     //create correct output for moreinfo.js 
     //convert from unix to js time
     //add am/pm based on time
@@ -139,6 +174,7 @@ class App extends React.Component{
                 updateMoreInfo={this.updateMoreInfo}
                 chartDataStar={this.state.chartDataStar}
                 chartDataFresh={this.state.chartDataFresh}
+                currentDay={this.state.currentDay}
                 />
         }else if(this.state.moreInfoEnabled && !this.state.chartReady){
             return(
