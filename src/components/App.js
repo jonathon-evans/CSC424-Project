@@ -42,7 +42,7 @@ class App extends React.Component{
             console.log(e)
         })
 
-        await axios.get(`https://linetracker.live/api/results?loc=SB&time=${this.state.timeStampFresh}`)
+        await axios.get(`https://linetracker.live/api/results?loc=FR&time=${this.state.timeStampFresh}`)
         .then(response => {
 
             let status = this.determineBusyStatus(response.data[0].class);
