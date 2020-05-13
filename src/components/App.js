@@ -68,7 +68,7 @@ class App extends React.Component{
         let dateStar = this.createDate(this.state.timeStampStar);
         let dateFresh = this.createDate(this.state.timeStampFresh);
 
-        await axios.get(`https://linetracker.live/api/results?loc=SB&time=${dateFresh}&span=hourly`)
+        await axios.get(`https://linetracker.live/api/results?loc=FR&time=${dateFresh}&span=hourly`)
         .then(response => {
             let chartFresh = this.updateChartData(response.data)
             this.setState({chartDataFresh: chartFresh})
