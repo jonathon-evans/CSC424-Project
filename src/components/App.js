@@ -96,9 +96,9 @@ class App extends React.Component{
     //convert num from server to status 
     determineBusyStatus(status){
         switch(status){
-            case 5: 
+            case 4: 
                 return "Very";
-            case 4:
+            case 3:
                 return "Fairly";
             case 1:
                 return 'Not';

@@ -85,7 +85,7 @@ class Choice extends React.Component{
                     {this.renderLineImage()}
                     </div>
                     <p className={`Choice-Div-Status ${this.determineStatusColor()}`}>{this.props.currentBusyStatus}</p>
-                    <p id="Choice-Div-Busy">Busy</p>
+                    {this.props.currentBusyStatus != "Closed" ? <p id="Choice-Div-Busy">Busy</p> : <p id="Choice-Div-Busy"> </p>}
                     <div className="Choice-Div-See">
                         <button 
                             className={this.props.lineImageEnabled ? "Choice-Div-See-Button Choice-Div-See-Button-Enabled" : 'Choice-Div-See-Button'}
